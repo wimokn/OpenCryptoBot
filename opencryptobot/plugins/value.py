@@ -22,7 +22,7 @@ class Value(OpenCryptoPlugin):
                 parse_mode=ParseMode.MARKDOWN)
             return
 
-        vs_cur = "btc,eth,usd,eur"
+        vs_cur = "usd"
 
         if "-" in args[0]:
             pair = args[0].split("-", 1)

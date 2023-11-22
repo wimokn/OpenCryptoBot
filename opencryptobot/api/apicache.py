@@ -36,7 +36,7 @@ class APICache(object):
 
     @staticmethod
     def refresh_coinmarketcap_coin_list():
-        APICache.cmc_coin_list = Market().listings()["data"]
+        APICache.cmc_coin_list #= Market().listings()["data"]
 
     @staticmethod
     def refresh_coingecko_exchange_list():
@@ -61,9 +61,9 @@ class APICache(object):
     @staticmethod
     def get_cmc_coin_list():
         if APICache.cmc_coin_list:
-            return APICache.cmc_coin_list
+            return #APICache.cmc_coin_list
         else:
-            return Market().listings()["data"]
+            return #Market().listings()["data"]
 
     @staticmethod
     def get_cg_exchanges_list():

@@ -52,7 +52,7 @@ class Price(OpenCryptoPlugin):
         coin_id = str()
         coin_name = str()
         for entry in response:
-            if entry["symbol"].upper() == coin:
+            if entry["id"].upper() == coin:
                 coin_id = entry["id"]
                 coin_name = entry["name"]
                 break
@@ -91,12 +91,7 @@ class Price(OpenCryptoPlugin):
                             msg += f"`{base_coin}: {price}`\n"
         else:
             if not vs_cur:
-                if coin == "BTC":
-                    vs_cur = "ETH,USD,EUR"
-                elif coin == "ETH":
-                    vs_cur = "BTC,USD,EUR"
-                else:
-                    vs_cur = "BTC,ETH,USD,EUR"
+                vs_cur = "USD"
 
             try:
                 result = cg.get_simple_price(coin_id, vs_cur)

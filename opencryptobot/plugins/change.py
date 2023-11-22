@@ -43,7 +43,7 @@ class Change(OpenCryptoPlugin):
 
         # Get coin ID and data
         for entry in response:
-            if entry["symbol"].upper() == coin:
+            if entry["id"].upper() == coin:
                 try:
                     data = CoinGecko().get_coin_by_id(entry["id"])
                 except Exception as e:

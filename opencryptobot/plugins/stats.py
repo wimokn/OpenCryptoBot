@@ -40,7 +40,7 @@ class Stats(OpenCryptoPlugin):
 
         # Get coin ID and data
         for entry in response:
-            if entry["symbol"].upper() == coin:
+            if entry["id"].upper() == coin:
                 try:
                     data = CoinGecko().get_coin_by_id(entry["id"])
                 except Exception as e:
@@ -71,23 +71,10 @@ class Stats(OpenCryptoPlugin):
             sup_t = "N/A"
 
         usd = data["market_data"]["current_price"]["usd"]
-        eur = data["market_data"]["current_price"]["eur"]
-        btc = data["market_data"]["current_price"]["btc"]
-        eth = data["market_data"]["current_price"]["eth"]
 
         p_usd = utl.format(usd, force_length=True)
-        p_eur = utl.format(eur, force_length=True, template=p_usd)
-        p_btc = utl.format(btc, force_length=True, template=p_usd)
-        p_eth = utl.format(eth, force_length=True, template=p_usd)
 
         p_usd = "{:>12}".format(p_usd)
-        p_eur = "{:>12}".format(p_eur)
-        p_btc = "{:>12}".format(p_btc)
-        p_eth = "{:>12}".format(p_eth)
-
-        # Do not display BTC or ETH price if coin is BTC or ETH
-        btc_str = "" if coin == "BTC" else f"BTC {p_btc}\n"
-        eth_str = "" if coin == "ETH" else f"ETH {p_eth}\n"
 
         v_24h = utl.format(int(float(data["market_data"]["total_volume"]["usd"])))
         m_cap = utl.format(int(float(data["market_data"]["market_cap"]["usd"])))
@@ -129,10 +116,7 @@ class Stats(OpenCryptoPlugin):
 
         msg = f"`" \
               f"{name} ({symbol})\n\n" \
-              f"USD {p_usd}\n" \
-              f"EUR {p_eur}\n" \
-              f"{btc_str}" \
-              f"{eth_str}\n" \
+              f"USD {p_usd}\n\n" \
               f"Hour  {h1}\n" \
               f"Day   {d1}\n" \
               f"Week  {w1}\n" \
@@ -145,8 +129,7 @@ class Stats(OpenCryptoPlugin):
               f"Circ. Supp: {sup_c}\n" \
               f"Total Supp: {sup_t}\n\n" \
               f"`" \
-              f"Stats on [CoinGecko](https://www.coingecko.com/en/coins/{cgid}) & " \
-              f"[Coinlib](https://coinlib.io/coin/{coin}/{coin})"
+              f"Stats on [CoinGecko](https://www.coingecko.com/en/coins/{cgid})"
 
         if keywords.get(Keyword.INLINE):
             return msg
